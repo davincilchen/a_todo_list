@@ -1,0 +1,70 @@
+<div class="container">
+  <%= form_for @todo, :html => {:class => "form-horizontal center"} do |f| %>
+  <div class="form-group">
+    <%= f.label :title, "項目", class: "col-md-2 control-label" %>
+    <div class="col-md-7">
+      <%= f.text_field :title, class: "form-control", readonly: onlyread  %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :notes, "內容", class: "col-md-2 control-label" %>
+    <div class="col-md-7">
+      <%= f.text_area :notes, class: "form-control", readonly: onlyread, :rows => 6 %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :due_date, "截止日", class: "col-md-2 control-label" %>
+    <% if @allow_modify %>
+      <div class="col-md-7">
+        <%= f.date_select :due_date, class: "form-control" %>
+      </div>
+    <% else %>
+      <div class="col-md-7">
+        <%= f.text_field :due_date, class: "form-control", readonly: true  %>
+      </div>
+    <% end %>
+
+  </div>
+
+
+  <div class="form-group">
+    <% if @allow_modify %>
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-3">
+        <%= f.submit "送出", class: "btn btn-default btn-primary" %>
+      </div>
+
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-2">
+        <%= link_to "首頁", todos_url, class: "pull-right"%>
+      </div>
+
+    <% else %>
+
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-7">
+        <%= link_to "首頁", todos_url, class: "pull-right"%>
+      </div>
+    <% end %>
+   </div>
+
+
+  <% end %>
+</div>
+
+<%#= onlyread %>
+
+<br>
+<br>
+<br>
+
+<% if @todo.errors.present? %>
+  <ul>
+    <% @todo.errors.each do |error, message| %>
+      <li> <%= "#{error.capitalize}  #{message}" %></li>
+    <% end %>
+  </ul>
+<% end %>
